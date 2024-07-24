@@ -34,7 +34,11 @@ After=network-online.target
 User=node_exporter
 Group=node_exporter
 Type=simple
-ExecStart=/usr/local/bin/node_exporter
+ExecStart=/usr/local/bin/node_exporter \
+  --collector.disable-defaults \
+  --collector.cpu \
+  --collector.meminfo \
+  --collector.loadavg
 
 [Install]
 WantedBy=default.target
