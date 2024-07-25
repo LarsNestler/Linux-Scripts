@@ -1,16 +1,16 @@
 #!/bin/bash
 
+NODE_EXPORTER_VERSION="1.8.2"
+
 # Update system packages
 echo "Updating system packages..."
 sudo apt-get update -y
-sudo apt-get upgrade -y
 
 # Create a user for Node Exporter
 echo "Creating node_exporter user..."
 sudo useradd --no-create-home --shell /bin/false node_exporter
 
 # Download and install Node Exporter
-NODE_EXPORTER_VERSION="1.8.2"
 echo "Downloading Node Exporter version $NODE_EXPORTER_VERSION..."
 cd /tmp
 curl -LO https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VERSION}/node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
@@ -34,11 +34,7 @@ After=network-online.target
 User=node_exporter
 Group=node_exporter
 Type=simple
-ExecStart=/usr/local/bin/node_exporter \
-  --collector.disable-defaults \
-  --collector.cpu \
-  --collector.meminfo \
-  --collector.loadavg
+ExecStart=/usr/local/bin/node_exporter
 
 [Install]
 WantedBy=default.target
